@@ -1,3 +1,32 @@
+## [1.8.7](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.6...v1.8.7) (2023-09-04)
+
+
+### Bug Fixes
+
+* **flocking:** add flocking cmake automation ([ac1365a](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/ac1365ae02568e2de2a4434f0e60365420f8df83))
+* **flocking:** fix flocking description ([84fd158](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/84fd1584747f6c61a8ba8d151c0bd1cbc4124f6f))
+
+## [1.8.6](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.5...v1.8.6) (2023-09-04)
+
+
+### Bug Fixes
+
+* **flocking:** fix flocking rule composition ([52b690f](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/52b690f4b5409b3efb94ed4fd5181451e89d4768))
+
+## [1.8.5](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.4...v1.8.5) (2023-09-01)
+
+
+### Bug Fixes
+
+* **intro:** add numberings for the first class ([33fc80c](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/33fc80cff6c1c0efaaaaa915e9e79d1cd60098ce))
+
+## [1.8.4](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.3...v1.8.4) (2023-08-31)
+
+
+### Bug Fixes
+
+* **intro:** add sequence diagram suggestion into intro programming ([5182e5d](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/5182e5dd905bf0c0b3b127968c8a365c87e93547))
+
 ## [1.8.3](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.2...v1.8.3) (2023-08-31)
 
 
