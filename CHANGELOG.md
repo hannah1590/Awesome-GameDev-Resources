@@ -1,3 +1,40 @@
+## [1.8.12](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.11...v1.8.12) (2023-09-06)
+
+
+### Bug Fixes
+
+* **ai:** add link to flocking materials to AI summary ([5c500f4](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/5c500f44fba0fe34395ee1f0c09eb411c8a01a1e))
+* **blog:** notes on submissions ([f66ddc6](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/f66ddc6b14f5d52b9709ff947b9e63cf1adcc2cf))
+
+## [1.8.11](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.10...v1.8.11) (2023-09-06)
+
+
+### Bug Fixes
+
+* **font:** change to jost ([00125a0](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/00125a0944cc3cdf9e96449bc5e83a5d3f666bc2))
+
+## [1.8.10](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.9...v1.8.10) (2023-09-06)
+
+
+### Bug Fixes
+
+* **data-types:** fix data types descriptions ([78fc0d4](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/78fc0d4329d05641cc0c7666971899853d1c4715))
+
+## [1.8.9](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.8...v1.8.9) (2023-09-06)
+
+
+### Bug Fixes
+
+* **data-types:** add spacing on the data-types specification ([b361d98](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/b361d987b8c5fd947a4e498cda2766cf3bd03290))
+* **typo:** remove unused button ([061968d](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/061968d83936c885fafe4f2b6b7b4984a22f7240))
+
+## [1.8.8](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.7...v1.8.8) (2023-09-05)
+
+
+### Performance Improvements
+
+* **flocking:** add better arrows ([def6512](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/def65128a795bb394ea5ddbd2d7e33e20379ad4f))
+
 ## [1.8.7](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.6...v1.8.7) (2023-09-04)
 
 
