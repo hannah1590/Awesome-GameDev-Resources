@@ -48,12 +48,14 @@ public:
 
     pair<float,float> getNewVel(float t, float kC, float kS, float kA)
     {
-        return vel + (getForce(kC, kS, kA) * t);
+        vel = vel + (getForce(kC, kS, kA) * t);
+        return vel;
     }
 
     pair<float,float> getNewPos(float t, pair<float,float> newVel)
     {
-        return pos + (newVel * t);
+        pos = pos + (newVel * t);
+        return pos;
     }
 
 private:
@@ -81,11 +83,11 @@ int main(){
     float vy;    // y vel
     float t;     // time
 
-    pair<float, float> pCM(0.0f,0.0f); // pos of center of mass
-    pair<float, float> fC;                   // force moving agent to center of mass in cohesion radius
-    pair<float, float> fS(0.0f,0.0f);  // force moving agent from other agents in separation radius
-    pair<float, float> vAvg(0.0f,0.0f);// avg vel of the agents
-    pair<float, float> fA;                   // force aligning agents with the avg vel of the group
+    pair<float, float> pCM(0.0f,0.0f);  // pos of center of mass
+    pair<float, float> fC;                        // force moving agent to center of mass in cohesion radius
+    pair<float, float> fS;                        // force moving agent from other agents in separation radius
+    pair<float, float> vAvg(0.0f,0.0f); // avg vel of the agents
+    pair<float, float> fA;                        // force aligning agents with the avg vel of the group
 
     cin >> rC >> rS >> fSMax >> rA >> kC >> kS >> kA >> n;
 
@@ -95,92 +97,87 @@ int main(){
     {
         cin >> x >> y >> vx >> vy;
         agents[i] = agent(x,y,vx,vy);
-
-        // adding agents pos to pos of center mass
-        pCM = pCM + agents[i].getPos();
-
-        // Adding agents vel to avg vel
-        vAvg = vAvg + agents[i].getVel();
     }
 
-    // dividing pos of center mass by num of agents to get final value
-    pCM = pCM / n;
+    while(!cin.eof()) {
+        cin >> t;
+        pCM = make_pair(0.0f,0.0f);
+        vAvg = make_pair(0.0f,0.0f);
 
-    // dividing sum of velocities by num of agents to get avg
-    vAvg = vAvg / n;
-
-    for(int i = 0; (float)i < n; i++)
-    {
-        // getting the force moving the agent to center of mass
-        pair<float,float> temp = pCM - agents[i].getPos();
-        temp.first = pow(temp.first,2.0f);
-        temp.second = pow(temp.second,2.0f);
-        float tempSqrt = sqrt(temp.first + temp.second);
-
-        if(tempSqrt <= rC)
+        for(int i = 0; (float)i < n; i++)
         {
-            fC = (pCM - agents[i].getPos()) / rC;
-            agents[i].setForceCenter(fC);
-        }
-        else
-        {
-            fC = make_pair(0.0f,0.0f);
-            agents[i].setForceCenter(fC);
+            pCM = pCM + agents[i].getPos(); // adding agents pos to pos of center mass
+            vAvg = vAvg + agents[i].getVel(); // Adding agents vel to avg vel
         }
 
-        for(int j = 0; (float)j < n; j++)
-        {
-            // getting the force of separation for each agent
-            temp = agents[i].getPos() - agents[j].getPos();
-            temp.first = pow(temp.first,2.0f);
-            temp.second = pow(temp.second,2.0f);
-            tempSqrt = sqrt(temp.first + temp.second);
+        for (int i = 0; (float) i < n; i++) {
+            pair<float, float> temp = ((pCM - agents[i].getPos()) / (n - 1)) -
+                                      agents[i].getPos(); // deleting the current pos data from the combination of neighbor data
+            temp.first = pow(temp.first, 2.0f);
+            temp.second = pow(temp.second, 2.0f);
+            float tempSqrt = sqrt(temp.first + temp.second);
 
-            if(0 < tempSqrt && tempSqrt <= rS)
+            if (tempSqrt <= rC) {
+                fC = (((pCM - agents[i].getPos()) / (n - 1)) - agents[i].getPos()) / rC;
+                agents[i].setForceCenter(fC);
+            } else {
+                fC = make_pair(0.0f, 0.0f);
+                agents[i].setForceCenter(fC);
+            }
+
+            fS = make_pair(0.0f, 0.0f); // resets fS
+            for (int j = 0; (float) j < n; j++) {
+                // getting the force of separation for each agent
+                temp = agents[i].getPos() - agents[j].getPos();
+                temp.first = pow(temp.first, 2.0f);
+                temp.second = pow(temp.second, 2.0f);
+                tempSqrt = sqrt(temp.first + temp.second);
+
+                if (0 < tempSqrt && tempSqrt <= rS) {
+                    fS = fS + ((agents[i].getPos() - agents[j].getPos()) / tempSqrt) / tempSqrt;
+                }
+            }
+
+            // Checks if force separate is greater than the max value it can be
+            tempSqrt = sqrt(pow(fS.first, 2.0f) + pow(fS.second, 2.0f));
+
+            if (tempSqrt <= fSMax) {
+                agents[i].setForceSeparate(fS);
+            } else {
+                fS = (fS / tempSqrt) * fSMax;
+                agents[i].setForceSeparate(fS);
+            }
+
+
+            for(int j = 0; (float)j < n; j++)
             {
-                fS = fS + (agents[i].getPos() - agents[j].getPos()) / tempSqrt;
+                temp = agents[i].getPos() - agents[j].getPos();
+                temp.first = pow(temp.first, 2.0f);
+                temp.second = pow(temp.second, 2.0f);
+                tempSqrt = sqrt(temp.first + temp.second);
+
+                if (tempSqrt > rA && rA != 0) {
+                    vAvg = vAvg - agents[j].getVel();
+                }
+            }
+            temp = (vAvg / n) - agents[i].getVel();
+            temp.first = pow(temp.first, 2.0f);
+            temp.second = pow(temp.second, 2.0f);
+            tempSqrt = sqrt(temp.first + temp.second);
+            if (rA != 0) {
+                fA = ((vAvg / n) / tempSqrt) * tempSqrt;
+                agents[i].setForceAlign(fA);
             }
         }
 
-        // Checks if force separate is greater than the max value it can be
-        tempSqrt = sqrt(pow(fS.first,2.0f) + pow(fS.second,2.0f));
+        for (int i = 0; (float) i < n; i++) {
+            pair<float, float> newVel = agents[i].getNewVel(t, kC, kS, kA);
+            pair<float, float> newPos = agents[i].getNewPos(t, newVel);
 
-        if(tempSqrt <= fSMax)
-        {
-            agents[i].setForceSeparate(fS);
+            cout << fixed << setprecision(3) << newPos.first << " " << newPos.second << " " << newVel.first << " "
+                 << newVel.second << endl;
         }
-        else
-        {
-            fS = (fS/tempSqrt) * fSMax;
-            agents[i].setForceSeparate(fS);
-        }
-
-        // getting the force aligning the agents together
-        temp = vAvg - agents[i].getVel();
-        temp.first = pow(temp.first,2.0f);
-        temp.second = pow(temp.second,2.0f);
-        tempSqrt = sqrt(temp.first + temp.second);
-
-        if(tempSqrt <= rA && tempSqrt > 0.0f)
-        {
-            fA = vAvg - (agents[i].getVel() / rA);
-            agents[i].setForceAlign(fA);
-        }
-        else
-        {
-            fA = make_pair(0.0f,0.0f);
-            agents[i].setForceAlign(fA);
-        }
-    }
-
-    cin >> t;
-
-    for(int i = 0; (float)i < n; i++)
-    {
-        pair<float,float> newVel = agents[i].getNewVel(t, kC, kS, kA);
-        pair<float,float> newPos = agents[i].getNewPos(t, newVel);
-
-        cout << fixed << setprecision(3) << newPos.first << " " << newPos.second << " " << newVel.first << " " << newVel.second << endl;
+        cin >> t;
     }
 
     delete[] agents;
