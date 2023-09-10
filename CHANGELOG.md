@@ -1,3 +1,45 @@
+## [1.10.1](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.10.0...v1.10.1) (2023-09-09)
+
+
+### Bug Fixes
+
+* Update CppCmakeCPMandSDL3.md ([219e0ba](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/219e0ba96b82e1ad3eaab88c06216bd8677af8e8))
+
+# [1.10.0](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.9.1...v1.10.0) (2023-09-09)
+
+
+### Bug Fixes
+
+* **blog:** add "more" to the latest post ([2d3d34e](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/2d3d34e8e80692a3bb085367c85b40d33ef53d92))
+
+
+### Features
+
+* **blog:** add post about SDL, CPM and CMake ([fc03a8c](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/fc03a8c6d2b63b1db8f7e1deaf449e8ff5b144f6))
+
+## [1.9.1](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.9.0...v1.9.1) (2023-09-08)
+
+
+### Bug Fixes
+
+* **datatypes:** add caption to ascii table ([4a6ca34](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/4a6ca341d43d443c0353add698bebfb8e519e2f4))
+* **flocking:** catch the cat assignment reference ([948da2a](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/948da2ae627b024420eac0a78567bde92e3d8679))
+
+# [1.9.0](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.15...v1.9.0) (2023-09-08)
+
+
+### Features
+
+* **cattrap:** add catch the cat assignment ([d78cc50](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/d78cc50f50277e2c050c3f4e6951ab56becfc76d))
+
+## [1.8.15](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.14...v1.8.15) (2023-09-08)
+
+
+### Bug Fixes
+
+* **ai:** assignments description ([eb039be](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/eb039bed5102bfa316fbba615e004f6c4de8d8df))
+* **intro:** remove ascii table from the material ([69f7f8b](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/69f7f8b7da62526a01e3bbb9c646b8d4df76e8f7))
+
 ## [1.8.14](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.8.13...v1.8.14) (2023-09-07)
 
 
