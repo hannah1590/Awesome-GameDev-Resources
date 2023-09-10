@@ -57,7 +57,6 @@ public:
         pos = pos + (newVel * t);
         return pos;
     }
-
 private:
     pair<float, float> pos;
     pair<float, float> vel;
@@ -83,11 +82,11 @@ int main(){
     float vy;    // y vel
     float t;     // time
 
-    pair<float, float> pCM(0.0f,0.0f);  // pos of center of mass
-    pair<float, float> fC;                        // force moving agent to center of mass in cohesion radius
-    pair<float, float> fS;                        // force moving agent from other agents in separation radius
-    pair<float, float> vAvg(0.0f,0.0f); // avg vel of the agents
-    pair<float, float> fA;                        // force aligning agents with the avg vel of the group
+    pair<float, float> pCM;  // pos of center of mass
+    pair<float, float> fC;   // force moving agent to center of mass in cohesion radius
+    pair<float, float> fS;   // force moving agent from other agents in separation radius
+    pair<float, float> vAvg; // avg vel of the agents
+    pair<float, float> fA;   // force aligning agents with the avg vel of the group
 
     cin >> rC >> rS >> fSMax >> rA >> kC >> kS >> kA >> n;
 
@@ -148,7 +147,6 @@ int main(){
                 agents[i].setForceSeparate(fS);
             }
 
-
             for(int j = 0; (float)j < n; j++)
             {
                 temp = agents[i].getPos() - agents[j].getPos();
@@ -166,6 +164,10 @@ int main(){
             tempSqrt = sqrt(temp.first + temp.second);
             if (rA != 0) {
                 fA = ((vAvg / n) / tempSqrt) * tempSqrt;
+                agents[i].setForceAlign(fA);
+            }
+            else{
+                fA = make_pair(0.0f,0.0f);
                 agents[i].setForceAlign(fA);
             }
         }
