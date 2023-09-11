@@ -74,7 +74,7 @@ int main(){
     float kC;    // cohesion constant
     float kS;    // separation constant
     float kA;    // alignment constant
-    float n;     // number of agents
+    int n;     // number of agents
 
     float x;     // x coord
     float y;     // y coord
@@ -92,7 +92,9 @@ int main(){
 
     auto* agents = new agent[(int)n];
 
-    for(int i = 0; (float)i < n; i++)
+    int count = 0;
+
+    for(int i = 0; i < n; i++)
     {
         cin >> x >> y >> vx >> vy;
         agents[i] = agent(x,y,vx,vy);
@@ -103,13 +105,13 @@ int main(){
         pCM = make_pair(0.0f,0.0f);
         vAvg = make_pair(0.0f,0.0f);
 
-        for(int i = 0; (float)i < n; i++)
+        for(int i = 0; i < n; i++)
         {
             pCM = pCM + agents[i].getPos(); // adding agents pos to pos of center mass
             vAvg = vAvg + agents[i].getVel(); // Adding agents vel to avg vel
         }
 
-        for (int i = 0; (float) i < n; i++) {
+        for (int i = 0;  i < n; i++) {
             pair<float, float> temp = ((pCM - agents[i].getPos()) / (n - 1)) -
                                       agents[i].getPos(); // deleting the current pos data from the combination of neighbor data
             temp.first = pow(temp.first, 2.0f);
@@ -125,7 +127,7 @@ int main(){
             }
 
             fS = make_pair(0.0f, 0.0f); // resets fS
-            for (int j = 0; (float) j < n; j++) {
+            for (int j = 0; j < n; j++) {
                 // getting the force of separation for each agent
                 temp = agents[i].getPos() - agents[j].getPos();
                 temp.first = pow(temp.first, 2.0f);
@@ -152,7 +154,7 @@ int main(){
             temp.first = pow(temp.first, 2.0f);
             temp.second = pow(temp.second, 2.0f);
             tempSqrt = sqrt(temp.first + temp.second);
-            if (kA != 0) {
+            if (tempSqrt != 0) {
                 fA = ((vAvg / n) / tempSqrt) * tempSqrt;
                 agents[i].setForceAlign(fA);
             }
@@ -162,7 +164,7 @@ int main(){
             }
         }
 
-        for (int i = 0; (float) i < n; i++) {
+        for (int i = 0; i < n; i++) {
             pair<float, float> newVel = agents[i].getNewVel(t, kC, kS, kA);
             pair<float, float> newPos = agents[i].getNewPos(t, newVel);
 
