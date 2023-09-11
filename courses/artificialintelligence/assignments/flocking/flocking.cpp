@@ -147,22 +147,12 @@ int main(){
                 agents[i].setForceSeparate(fS);
             }
 
-            for(int j = 0; (float)j < n; j++)
-            {
-                temp = agents[i].getPos() - agents[j].getPos();
-                temp.first = pow(temp.first, 2.0f);
-                temp.second = pow(temp.second, 2.0f);
-                tempSqrt = sqrt(temp.first + temp.second);
-
-                if (tempSqrt > rA && rA != 0) {
-                    vAvg = vAvg - agents[j].getVel();
-                }
-            }
-            temp = (vAvg / n) - agents[i].getVel();
+            // finds the force that moves the agent towards the average velocity
+            temp = agents[i].getVel() - (vAvg / n);
             temp.first = pow(temp.first, 2.0f);
             temp.second = pow(temp.second, 2.0f);
             tempSqrt = sqrt(temp.first + temp.second);
-            if (rA != 0) {
+            if (kA != 0) {
                 fA = ((vAvg / n) / tempSqrt) * tempSqrt;
                 agents[i].setForceAlign(fA);
             }
