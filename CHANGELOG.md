@@ -1,3 +1,52 @@
+## [1.10.10](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.10.9...v1.10.10) (2023-09-12)
+
+
+### Performance Improvements
+
+* **ai:** improve catch the cat assignment description ([ed4b7b5](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/ed4b7b58ab8d1db2aa57b2fdcefb01431ca9d97e))
+
+## [1.10.9](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.10.8...v1.10.9) (2023-09-12)
+
+
+### Performance Improvements
+
+* **ai:** better rng assignment description ([cf141e1](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/cf141e1c31ff76dcd9988e6521ecd014b78685c1))
+
+## [1.10.8](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.10.7...v1.10.8) (2023-09-12)
+
+
+### Bug Fixes
+
+* **ai:** fix rng test cases ([7b6e964](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/7b6e96492f27edfbb5eee21eefccb40851e1e29e))
+
+## [1.10.7](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.10.6...v1.10.7) (2023-09-12)
+
+
+### Bug Fixes
+
+* **ai:** fix rng automated tests endline ([81ad7f6](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/81ad7f6f4e0b36554bb12cafc7fc09026a2122c1))
+
+## [1.10.6](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.10.5...v1.10.6) (2023-09-12)
+
+
+### Performance Improvements
+
+* **ai:** add more emojis and icons ([67db6cf](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/67db6cf5490b085571e2104d056a0bc8feb7d6b7))
+
+## [1.10.5](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.10.4...v1.10.5) (2023-09-11)
+
+
+### Bug Fixes
+
+* **ai:** inline warning ([eccdfee](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/eccdfee3bd9b108bfef2d708a87cc38cd0c360d9))
+
+## [1.10.4](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.10.3...v1.10.4) (2023-09-11)
+
+
+### Performance Improvements
+
+* **ai:** improved the clion setup ([6b63caf](https://github.com/InfiniBrains/Awesome-GameDev-Resources/commit/6b63cafcdfa18098788e38f54e51e6031cfcde05))
+
 ## [1.10.3](https://github.com/InfiniBrains/Awesome-GameDev-Resources/compare/v1.10.2...v1.10.3) (2023-09-11)
 
 
