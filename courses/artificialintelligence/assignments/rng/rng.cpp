@@ -8,7 +8,7 @@ int main(){
   signed int max;
 
   unsigned int xorShift;
-  int currentRandom;
+  unsigned int currentRandom;
   cin >> seed >> amount >> min >> max;
 
   for(int i = 0; i < amount; i++) {
