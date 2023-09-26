@@ -1,6 +1,7 @@
 // add your imports here
 #include <iostream>
 #include <vector>
+#include <map>
 using namespace std;
 
 int getRandom(int index)
@@ -18,14 +19,64 @@ int getRandom(int index)
     return random[index];
 }
 
-int main(){
-  // code here
-  unsigned int columns;
-  unsigned int rows;
-  unsigned int index;
+int main() {
+    // code here
+    unsigned int columns;
+    unsigned int rows;
+    unsigned int index;
 
-  cin >> columns >> rows >> index;
+    cin >> columns >> rows >> index;
 
-  vector<bool> maze;
-  maze.resize(columns * rows);
+    map<int, char> walls;
+    vector<bool> maze;
+    maze.resize(columns * rows);
+
+    for(int i = 0; i < (columns * 2 + 2) * (rows + 1); i++)
+    {
+        if(i % 2 == 0 && i >= columns * 2 + 1)
+        {
+            walls[i] = '|';
+        }
+        else if(i % 2 == 1 && i + 1 % columns * 2 + 2 != 0)
+        {
+            walls[i] = '_';
+        }
+        else
+        {
+            walls[i] = ' ';
+        }
+    }
+
+    /*
+    for (int x = 0; x < columns * 2 + 2; x++) {
+        for (int y = 0; y < rows + 1; y++)
+        {
+
+            if(x % 2 == 1 &&  x != columns * 2 + 1)
+            {
+                walls[make_pair(y,x)] = '_'; // x and y swapped so walls iterates correctly
+            }
+            else if(x % 2 == 0 && y != 0)
+            {
+                walls[make_pair(y,x)] = '|';
+            }
+            else
+            {
+                walls[make_pair(y,x)] = ' ';
+            }
+        }
+    }
+     */
+
+    auto iterator = walls.begin();
+    while (iterator != walls.end())
+    {
+        cout << iterator->second;
+        //if(iterator->first == columns * 2 + 1)
+        //{
+        //    cout << "\n";
+        //}
+        iterator++;
+    }
+
 }
