@@ -1,7 +1,8 @@
 // add your imports here
 #include <iostream>
-#include <vector>
 #include <map>
+#include <vector>
+#include <set>
 using namespace std;
 
 int getRandom(int index)
@@ -27,56 +28,103 @@ int main() {
 
     cin >> columns >> rows >> index;
 
-    map<int, char> walls;
-    vector<bool> maze;
-    maze.resize(columns * rows);
+    map<pair<int,int>, char> walls;
+    vector<pair<int,int>> maze;
+    vector<pair<int,int>> visitedCells;
+    vector<pair<int,int>> currentNeighbors;
 
-    for(int i = 0; i < (columns * 2 + 2) * (rows + 1); i++)
+    // makes walls of the maze
+    for(int y = 0; y < rows + 1; y++)
     {
-        if(i % 2 == 0 && i >= columns * 2 + 1)
+        for(int x = 0; x < (columns * 2 + 2); x++)
         {
-            walls[i] = '|';
-        }
-        else if(i % 2 == 1 && i + 1 % columns * 2 + 2 != 0)
-        {
-            walls[i] = '_';
-        }
-        else
-        {
-            walls[i] = ' ';
-        }
-    }
-
-    /*
-    for (int x = 0; x < columns * 2 + 2; x++) {
-        for (int y = 0; y < rows + 1; y++)
-        {
-
-            if(x % 2 == 1 &&  x != columns * 2 + 1)
+            if(x % 2 == 0 && y != 0)
             {
-                walls[make_pair(y,x)] = '_'; // x and y swapped so walls iterates correctly
+                walls[make_pair(x,y)] = '|';
             }
-            else if(x % 2 == 0 && y != 0)
+            else if(x % 2 == 1 && x != columns * 2 + 1)
             {
-                walls[make_pair(y,x)] = '|';
+                walls[make_pair(x,y)] = '_';
             }
             else
             {
-                walls[make_pair(y,x)] = ' ';
+                walls[make_pair(x,y)] = ' ';
             }
         }
     }
-     */
 
-    auto iterator = walls.begin();
-    while (iterator != walls.end())
+    // sets up each maze coord
+    for(int x = 0; x < columns; x++)
     {
-        cout << iterator->second;
-        //if(iterator->first == columns * 2 + 1)
-        //{
-        //    cout << "\n";
-        //}
-        iterator++;
+        for(int y = 0; y < rows; y++)
+        {
+            maze.emplace_back(x,y);
+        }
     }
 
+    visitedCells.emplace_back(0,0);
+
+    //while(!visitedCells.empty())
+    //{
+        int currentX = visitedCells.crbegin()->first;
+        int currentY = visitedCells.crbegin()->second;
+        if(currentY - 1 >= 0 && visitedCells.end() ==
+                                    find(visitedCells.begin(), visitedCells.end(),make_pair(currentX,currentY - 1)))
+        {
+            currentNeighbors.emplace_back(currentX,currentY - 1);
+        }
+        if(currentX + 1 < columns && visitedCells.end() ==
+                                     find(visitedCells.begin(), visitedCells.end(),make_pair(currentX + 1,currentY)))
+        {
+            currentNeighbors.emplace_back(currentX + 1,currentY);
+        }
+        if(currentY + 1 < rows && visitedCells.end() ==
+                                  find(visitedCells.begin(), visitedCells.end(),make_pair(currentX,currentY + 1)))
+        {
+            currentNeighbors.emplace_back(currentX,currentY + 1);
+        }
+        if(currentX - 1 >= 0 && visitedCells.end() ==
+                                find(visitedCells.begin(), visitedCells.end(),make_pair(currentX - 1,currentY)))
+        {
+            currentNeighbors.emplace_back(currentX - 1,currentY);
+        }
+
+        if(currentNeighbors.size() > 1)
+        {
+            int random = getRandom(index);
+            index++;
+            if(index > 99)
+            {
+                index = 0;
+            }
+
+            random = random % currentNeighbors.size();
+            visitedCells.emplace_back(currentNeighbors[random]);
+        }
+        else if (currentNeighbors.size() == 1)
+        {
+            visitedCells.emplace_back(currentNeighbors[0]);
+        }
+        else
+        {
+            visitedCells.pop_back();
+        }
+
+        currentNeighbors.clear();
+    //}
+
+    for(auto p : currentNeighbors)
+    {
+        cout << p.first << p.second << endl;
+    }
+
+    // prints out current state of walls
+    for(int y = 0; y < rows + 1; y++)
+    {
+        for (int x = 0; x < (columns * 2 + 2); x++)
+        {
+            cout << walls[make_pair(x,y)];
+        }
+        cout << "\n";
+    }
 }
