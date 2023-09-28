@@ -20,6 +20,9 @@ int getRandom(unsigned int index)
     return random[index];
 }
 
+map<pair<int,int>, string> walls;
+map<pair<int,int>, bool> maze;
+
 int main() {
     // code here
     unsigned int columns;
@@ -28,8 +31,7 @@ int main() {
 
     cin >> columns >> rows >> index;
 
-    map<pair<int,int>, string> walls;
-    map<pair<int,int>, bool> maze;
+
     stack<pair<int,int>> stack;
     vector<pair<int,int>> currentNeighbors;
 
@@ -141,7 +143,7 @@ int main() {
 
 
     // prints out current state of walls
-    for(int y = 0; y < rows; y++)
+    for(int i = 0; i < columns; i++)
     {
        cout << " _";
     }
