@@ -92,19 +92,19 @@ int main() {
 
             if(currentNeighbors[random].second == currentY - 1)
             {
-                walls[make_pair(currentX, currentY - 1)] = " |";
+                walls[make_pair(currentX, currentY - 1)][0] = ' ';
             }
             else if(currentNeighbors[random].first == currentX + 1)
             {
-                walls[make_pair(currentX, currentY)] = "_ ";
+                walls[make_pair(currentX, currentY)][1] = ' ';
             }
             else if(currentNeighbors[random].second == currentY + 1)
             {
-                walls[make_pair(currentX, currentY)] = " |";
+                walls[make_pair(currentX, currentY)][0] = ' ';
             }
             else if(currentNeighbors[random].first == currentX - 1)
             {
-                walls[make_pair(currentX - 1, currentY)] = "_ ";
+                walls[make_pair(currentX - 1, currentY)][1] = ' ';
             }
             stack.push(currentNeighbors[random]);
             maze[currentNeighbors[random]] = true;
@@ -113,19 +113,19 @@ int main() {
         {
             if(currentNeighbors[0].second == currentY - 1)
             {
-                walls[make_pair(currentX, currentY - 1)] = " |";
+                walls[make_pair(currentX, currentY - 1)][0] = ' ';
             }
             else if(currentNeighbors[0].first == currentX + 1)
             {
-                walls[make_pair(currentX, currentY)] = "_ ";
+                walls[make_pair(currentX, currentY)][1] = ' ';
             }
             else if(currentNeighbors[0].second == currentY + 1)
             {
-                walls[make_pair(currentX, currentY)] = " |";
+                walls[make_pair(currentX, currentY)][0] = ' ';
             }
             else if(currentNeighbors[0].first == currentX - 1)
             {
-                walls[make_pair(currentX - 1, currentY)] = "_ ";
+                walls[make_pair(currentX - 1, currentY)][1] = ' ';
             }
 
             stack.push(currentNeighbors[0]);
@@ -149,9 +149,8 @@ int main() {
     for(int y = 0; y < rows; y++)
     {
         cout << "|";
-        for (int x = 0; x < columns; x++)
-        {
-            cout << walls[make_pair(x,y)];
+        for (int x = 0; x < columns; x++) {
+            cout << walls[make_pair(x, y)];
         }
         cout << " \n";
     }
