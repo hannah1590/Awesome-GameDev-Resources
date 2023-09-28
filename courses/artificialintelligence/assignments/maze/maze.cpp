@@ -2,10 +2,10 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include <set>
+#include <stack>
 using namespace std;
 
-int getRandom(int index)
+int getRandom(unsigned int index)
 {
     int random[] = {72, 99,  56,  34, 43, 62,31, 4, 70, 22,
                     6, 65, 96, 71, 29, 9,98, 41, 90, 7,
@@ -28,28 +28,17 @@ int main() {
 
     cin >> columns >> rows >> index;
 
-    map<pair<int,int>, char> walls;
-    vector<pair<int,int>> maze;
-    vector<pair<int,int>> visitedCells;
+    map<pair<int,int>, string> walls;
+    map<pair<int,int>, bool> maze;
+    stack<pair<int,int>> stack;
     vector<pair<int,int>> currentNeighbors;
 
     // makes walls of the maze
-    for(int y = 0; y < rows + 1; y++)
+    for(int y = 0; y < rows; y++)
     {
-        for(int x = 0; x < (columns * 2 + 2); x++)
+        for(int x = 0; x < columns; x++)
         {
-            if(x % 2 == 0 && y != 0)
-            {
-                walls[make_pair(x,y)] = '|';
-            }
-            else if(x % 2 == 1 && x != columns * 2 + 1)
-            {
-                walls[make_pair(x,y)] = '_';
-            }
-            else
-            {
-                walls[make_pair(x,y)] = ' ';
-            }
+            walls[make_pair(x,y)] = "_|";
         }
     }
 
@@ -58,33 +47,34 @@ int main() {
     {
         for(int y = 0; y < rows; y++)
         {
-            maze.emplace_back(x,y);
+            maze[make_pair(x,y)] = false;
         }
     }
 
-    visitedCells.emplace_back(0,0);
+    stack.emplace(0, 0);
+    maze[make_pair(0,0)] = true;
 
-    //while(!visitedCells.empty())
-    //{
-        int currentX = visitedCells.crbegin()->first;
-        int currentY = visitedCells.crbegin()->second;
-        if(currentY - 1 >= 0 && visitedCells.end() ==
-                                    find(visitedCells.begin(), visitedCells.end(),make_pair(currentX,currentY - 1)))
+    int currentX = 0;
+    int currentY = 0;
+
+    while(!stack.empty())
+    {
+        currentX = stack.top().first;
+        currentY = stack.top().second;
+
+        if(currentY - 1 >= 0 && !maze[make_pair(currentX,currentY - 1)])
         {
             currentNeighbors.emplace_back(currentX,currentY - 1);
         }
-        if(currentX + 1 < columns && visitedCells.end() ==
-                                     find(visitedCells.begin(), visitedCells.end(),make_pair(currentX + 1,currentY)))
+        if(currentX + 1 < columns && !maze[make_pair(currentX + 1,currentY)])
         {
             currentNeighbors.emplace_back(currentX + 1,currentY);
         }
-        if(currentY + 1 < rows && visitedCells.end() ==
-                                  find(visitedCells.begin(), visitedCells.end(),make_pair(currentX,currentY + 1)))
+        if(currentY + 1 < rows && !maze[make_pair(currentX,currentY + 1)])
         {
             currentNeighbors.emplace_back(currentX,currentY + 1);
         }
-        if(currentX - 1 >= 0 && visitedCells.end() ==
-                                find(visitedCells.begin(), visitedCells.end(),make_pair(currentX - 1,currentY)))
+        if(currentX - 1 >= 0 && !maze[make_pair(currentX - 1,currentY)])
         {
             currentNeighbors.emplace_back(currentX - 1,currentY);
         }
@@ -99,32 +89,70 @@ int main() {
             }
 
             random = random % currentNeighbors.size();
-            visitedCells.emplace_back(currentNeighbors[random]);
+
+            if(currentNeighbors[random].second == currentY - 1)
+            {
+                walls[make_pair(currentX, currentY - 1)] = " |";
+            }
+            else if(currentNeighbors[random].first == currentX + 1)
+            {
+                walls[make_pair(currentX, currentY)] = "_ ";
+            }
+            else if(currentNeighbors[random].second == currentY + 1)
+            {
+                walls[make_pair(currentX, currentY)] = " |";
+            }
+            else if(currentNeighbors[random].first == currentX - 1)
+            {
+                walls[make_pair(currentX - 1, currentY)] = "_ ";
+            }
+            stack.push(currentNeighbors[random]);
+            maze[currentNeighbors[random]] = true;
         }
         else if (currentNeighbors.size() == 1)
         {
-            visitedCells.emplace_back(currentNeighbors[0]);
+            if(currentNeighbors[0].second == currentY - 1)
+            {
+                walls[make_pair(currentX, currentY - 1)] = " |";
+            }
+            else if(currentNeighbors[0].first == currentX + 1)
+            {
+                walls[make_pair(currentX, currentY)] = "_ ";
+            }
+            else if(currentNeighbors[0].second == currentY + 1)
+            {
+                walls[make_pair(currentX, currentY)] = " |";
+            }
+            else if(currentNeighbors[0].first == currentX - 1)
+            {
+                walls[make_pair(currentX - 1, currentY)] = "_ ";
+            }
+
+            stack.push(currentNeighbors[0]);
+            maze[currentNeighbors[0]] = true;
         }
         else
         {
-            visitedCells.pop_back();
+            stack.pop();
         }
 
         currentNeighbors.clear();
-    //}
-
-    for(auto p : currentNeighbors)
-    {
-        cout << p.first << p.second << endl;
     }
 
+
     // prints out current state of walls
-    for(int y = 0; y < rows + 1; y++)
+    for(int y = 0; y < rows; y++)
     {
-        for (int x = 0; x < (columns * 2 + 2); x++)
+       cout << " _";
+    }
+    cout << "  \n";
+    for(int y = 0; y < rows; y++)
+    {
+        cout << "|";
+        for (int x = 0; x < columns; x++)
         {
             cout << walls[make_pair(x,y)];
         }
-        cout << "\n";
+        cout << " \n";
     }
 }
