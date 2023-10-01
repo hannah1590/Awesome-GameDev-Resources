@@ -22,6 +22,52 @@ int getRandom(unsigned int index)
 
 map<pair<int,int>, string> walls;
 map<pair<int,int>, bool> maze;
+stack<pair<int,int>> stackOfCells;
+vector<pair<int,int>> currentNeighbors;
+
+// adds each neighbor of the current cell that hasn't been visted yet to the stack
+void updateNeighbors(int currentX, int currentY, unsigned int columns, unsigned int rows)
+{
+    if(currentY - 1 >= 0 && !maze[make_pair(currentX,currentY - 1)]) // if up neighbor exists and has not been visited
+    {
+        currentNeighbors.emplace_back(currentX,currentY - 1);
+    }
+    if(currentX + 1 < columns && !maze[make_pair(currentX + 1,currentY)]) // if right neighbor exists and has not been visited
+    {
+        currentNeighbors.emplace_back(currentX + 1,currentY);
+    }
+    if(currentY + 1 < rows && !maze[make_pair(currentX,currentY + 1)]) // if down neighbor exists and has not been visited
+    {
+        currentNeighbors.emplace_back(currentX,currentY + 1);
+    }
+    if(currentX - 1 >= 0 && !maze[make_pair(currentX - 1,currentY)]) // if left neighbor exists and has not been visited
+    {
+        currentNeighbors.emplace_back(currentX - 1,currentY);
+    }
+}
+
+// changes the maze based on the current cell and the index of which neighbor to change
+void updateMaze(int index, int currentX, int currentY, unsigned int columns, unsigned int rows)
+{
+    if(currentNeighbors[index].second == currentY - 1) // if neighbor is up
+    {
+        walls[make_pair(currentX, currentY - 1)][0] = ' ';
+    }
+    else if(currentNeighbors[index].first == currentX + 1) // if neighbor is right
+    {
+        walls[make_pair(currentX, currentY)][1] = ' ';
+    }
+    else if(currentNeighbors[index].second == currentY + 1) // if neighbor is down
+    {
+        walls[make_pair(currentX, currentY)][0] = ' ';
+    }
+    else if(currentNeighbors[index].first == currentX - 1) // if neighbor is left
+    {
+        walls[make_pair(currentX - 1, currentY)][1] = ' ';
+    }
+    stackOfCells.push(currentNeighbors[index]);
+    maze[currentNeighbors[index]] = true;
+}
 
 int main() {
     // code here
@@ -30,10 +76,6 @@ int main() {
     unsigned int index;
 
     cin >> columns >> rows >> index;
-
-
-    stack<pair<int,int>> stack;
-    vector<pair<int,int>> currentNeighbors;
 
     // makes walls of the maze
     for(int y = 0; y < rows; y++)
@@ -53,33 +95,18 @@ int main() {
         }
     }
 
-    stack.emplace(0, 0);
+    stackOfCells.emplace(0, 0);
     maze[make_pair(0,0)] = true;
 
     int currentX = 0;
     int currentY = 0;
 
-    while(!stack.empty())
+    while(!stackOfCells.empty())
     {
-        currentX = stack.top().first;
-        currentY = stack.top().second;
+        currentX = stackOfCells.top().first;
+        currentY = stackOfCells.top().second;
 
-        if(currentY - 1 >= 0 && !maze[make_pair(currentX,currentY - 1)])
-        {
-            currentNeighbors.emplace_back(currentX,currentY - 1);
-        }
-        if(currentX + 1 < columns && !maze[make_pair(currentX + 1,currentY)])
-        {
-            currentNeighbors.emplace_back(currentX + 1,currentY);
-        }
-        if(currentY + 1 < rows && !maze[make_pair(currentX,currentY + 1)])
-        {
-            currentNeighbors.emplace_back(currentX,currentY + 1);
-        }
-        if(currentX - 1 >= 0 && !maze[make_pair(currentX - 1,currentY)])
-        {
-            currentNeighbors.emplace_back(currentX - 1,currentY);
-        }
+        updateNeighbors(currentX, currentY, columns, rows);
 
         if(currentNeighbors.size() > 1)
         {
@@ -92,50 +119,15 @@ int main() {
 
             random = random % currentNeighbors.size();
 
-            if(currentNeighbors[random].second == currentY - 1)
-            {
-                walls[make_pair(currentX, currentY - 1)][0] = ' ';
-            }
-            else if(currentNeighbors[random].first == currentX + 1)
-            {
-                walls[make_pair(currentX, currentY)][1] = ' ';
-            }
-            else if(currentNeighbors[random].second == currentY + 1)
-            {
-                walls[make_pair(currentX, currentY)][0] = ' ';
-            }
-            else if(currentNeighbors[random].first == currentX - 1)
-            {
-                walls[make_pair(currentX - 1, currentY)][1] = ' ';
-            }
-            stack.push(currentNeighbors[random]);
-            maze[currentNeighbors[random]] = true;
+            updateMaze(random, currentX, currentY, columns, rows);
         }
         else if (currentNeighbors.size() == 1)
         {
-            if(currentNeighbors[0].second == currentY - 1)
-            {
-                walls[make_pair(currentX, currentY - 1)][0] = ' ';
-            }
-            else if(currentNeighbors[0].first == currentX + 1)
-            {
-                walls[make_pair(currentX, currentY)][1] = ' ';
-            }
-            else if(currentNeighbors[0].second == currentY + 1)
-            {
-                walls[make_pair(currentX, currentY)][0] = ' ';
-            }
-            else if(currentNeighbors[0].first == currentX - 1)
-            {
-                walls[make_pair(currentX - 1, currentY)][1] = ' ';
-            }
-
-            stack.push(currentNeighbors[0]);
-            maze[currentNeighbors[0]] = true;
+            updateMaze(0, currentX, currentY, columns, rows);
         }
         else
         {
-            stack.pop();
+            stackOfCells.pop();
         }
 
         currentNeighbors.clear();
