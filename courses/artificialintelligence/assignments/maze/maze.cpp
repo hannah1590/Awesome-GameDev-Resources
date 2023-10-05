@@ -25,7 +25,7 @@ map<pair<int,int>, bool> maze;
 stack<pair<int,int>> stackOfCells;
 vector<pair<int,int>> currentNeighbors;
 
-// adds each neighbor of the current cell that hasn't been visted yet to the stack
+// adds each neighbor of the current cell that hasn't been visited yet to the stack
 void updateNeighbors(int currentX, int currentY, unsigned int columns, unsigned int rows)
 {
     if(currentY - 1 >= 0 && !maze[make_pair(currentX,currentY - 1)]) // if up neighbor exists and has not been visited
@@ -47,7 +47,7 @@ void updateNeighbors(int currentX, int currentY, unsigned int columns, unsigned 
 }
 
 // changes the maze based on the current cell and the index of which neighbor to change
-void updateMaze(int index, int currentX, int currentY, unsigned int columns, unsigned int rows)
+void updateMaze(int index, int currentX, int currentY)
 {
     if(currentNeighbors[index].second == currentY - 1) // if neighbor is up
     {
@@ -98,8 +98,8 @@ int main() {
     stackOfCells.emplace(0, 0);
     maze[make_pair(0,0)] = true;
 
-    int currentX = 0;
-    int currentY = 0;
+    int currentX;
+    int currentY;
 
     while(!stackOfCells.empty())
     {
@@ -119,11 +119,11 @@ int main() {
 
             random = random % currentNeighbors.size();
 
-            updateMaze(random, currentX, currentY, columns, rows);
+            updateMaze(random, currentX, currentY);
         }
         else if (currentNeighbors.size() == 1)
         {
-            updateMaze(0, currentX, currentY, columns, rows);
+            updateMaze(0, currentX, currentY);
         }
         else
         {
