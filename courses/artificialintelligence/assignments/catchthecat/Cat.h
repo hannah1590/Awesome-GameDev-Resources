@@ -8,6 +8,7 @@ struct Cat : public IAgent {
      std::vector<std::pair<int,int>> neighbors;
      int halfSideSize = sideSize / 2;
 
+     // right / left
      if(catPos.first + 1 <= halfSideSize && !world[(catPos.second + halfSideSize) * sideSize + (catPos.first + 1 + halfSideSize)])
      {
          neighbors.emplace_back(catPos.first + 1,catPos.second);
@@ -56,7 +57,20 @@ struct Cat : public IAgent {
       {
           neighbors.emplace_back(catPos.first,catPos.second + 1);
       }
-      return neighbors.back(); // todo: change this
+
+      if(!neighbors.empty())
+      {
+          if(neighbors.size() == 1)
+              return neighbors.back();
+          else
+          {
+              srand(time(NULL));
+              return neighbors[rand() % neighbors.size()];
+          }
+      }
+      else
+          return catPos;
+
   }
 };
 #endif
