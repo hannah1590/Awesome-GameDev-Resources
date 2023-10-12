@@ -29,7 +29,7 @@ struct Cat : public IAgent {
             if(!northBorder && !eastBorder && !world[(currentY - 1) * sideSize + (currentX + 1)]) // NE
                 neighbors.emplace_back(std::make_pair(current.first + 1, current.second - 1), "NE");
             if(!northBorder && !world[(currentY - 1) * sideSize + (currentX)]) // NW
-                neighbors.emplace_back(std::make_pair(current.first, current.second - 1), "NE");
+                neighbors.emplace_back(std::make_pair(current.first, current.second - 1), "NW");
             if(!eastBorder && !world[(currentY) * sideSize + (currentX + 1)]) // E
                 neighbors.emplace_back(std::make_pair(current.first + 1, current.second), "EE");
             if(!westBorder && !world[(currentY) * sideSize + (currentX - 1)]) // W
@@ -44,7 +44,7 @@ struct Cat : public IAgent {
             if(!northBorder && !world[(currentY - 1) * sideSize + (currentX)]) // NE
                 neighbors.emplace_back(std::make_pair(current.first, current.second - 1), "NE");
             if(!northBorder && !westBorder && !world[(currentY - 1) * sideSize + (currentX - 1)]) // NW
-                neighbors.emplace_back(std::make_pair(current.first - 1, current.second - 1), "NE");
+                neighbors.emplace_back(std::make_pair(current.first - 1, current.second - 1), "NW");
             if(!eastBorder && !world[(currentY) * sideSize + (currentX + 1)]) // E
                 neighbors.emplace_back(std::make_pair(current.first + 1, current.second), "EE");
             if(!westBorder && !world[(currentY) * sideSize + (currentX - 1)]) // W
