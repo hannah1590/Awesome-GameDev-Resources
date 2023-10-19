@@ -1,3 +1,6 @@
-//
-// Created by hannah.fasco on 10/19/2023.
-//
+#include "Catcher.h"
+
+pair<int,int> Catcher::move(const vector<bool>& world, pair<int,int> catPos, int sideSize )
+{
+
+}
