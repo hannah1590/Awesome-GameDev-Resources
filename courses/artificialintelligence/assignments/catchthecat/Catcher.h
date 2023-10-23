@@ -7,6 +7,9 @@
 using namespace std;
 
 struct Catcher : public IAgent {
+    vector<pair<pair<int,int>,string>> getValidNeighbors(pair<int,int> current, const vector<bool>& world, int sideSize, vector<pair<int, char>>& distances);
+    vector<pair<int, char>> getDistances(pair<int,int> current, int sideSize);
+    bool catWinsOnSpace(pair<int,int> pos, int sideSize);
     pair<int,int> move(const vector<bool>& world, pair<int,int> catPos, int sideSize ) override;
 };
 #endif

@@ -1,6 +1,16 @@
 #include "Cat.h"
 
-vector<pair<pair<int,int>,string>> getValidNeighbors(pair<int,int> current, const vector<bool>& world, int sideSize, vector<pair<int, char>>& distances)
+// for unordered map and sets with pairs
+struct pairHash
+{
+public:
+    size_t operator()(const pair<int,int> p) const
+    {
+        return std::hash<int>()(p.first) ^ std::hash<int>()(p.second);
+    }
+};
+
+vector<pair<pair<int,int>,string>> Cat::getValidNeighbors(pair<int,int> current, const vector<bool>& world, int sideSize, vector<pair<int, char>>& distances)
 {
     int halfSideSize = sideSize / 2;
     vector<pair<pair<int,int>,string>> neighbors;
@@ -75,7 +85,7 @@ vector<pair<pair<int,int>,string>> getValidNeighbors(pair<int,int> current, cons
     return neighbors;
 }
 
-vector<pair<int, char>> getDistances(pair<int,int> current, int sideSize)
+vector<pair<int, char>> Cat::getDistances(pair<int,int> current, int sideSize)
 {
     int size = sideSize / 2;
     vector<pair<int, char>> distances;
@@ -102,6 +112,20 @@ vector<pair<int, char>> getDistances(pair<int,int> current, int sideSize)
     return distances;
 }
 
+bool Cat::catWinsOnSpace(pair<int,int> pos, int sideSize)
+{
+    int size = sideSize / 2;
+    if(pos.second >= size || pos.second <= -size)
+    {
+        return true;
+    }
+    else if(pos.first >= size || pos.first <= -size)
+    {
+        return true;
+    }
+    return false;
+}
+
 // used to hold cell data
 struct Node
 {
@@ -118,11 +142,11 @@ struct Node
 
 pair<int,int> Cat::move(const vector<bool>& world, pair<int,int> catPos, int sideSize )
 {
-    pair<int,int> borderExit(0,0);
+    pair<int,int> borderExit(100,100);
 
     priority_queue<Node, vector<Node>, greater<Node>> frontier; // puts nodes in a queue from low cost to high cost
-    unordered_set<pair<int,int>> frontierSet;
-    unordered_map<pair<int,int>, pair<int,int>> cameFrom;
+    unordered_set< pair<int,int>, pairHash> frontierSet;
+    unordered_map<pair<int,int>, pair<int,int>, pairHash> cameFrom;
 
     vector<pair<int, char>> initialDistance = getDistances(catPos, sideSize);
     Node origin;
@@ -139,7 +163,8 @@ pair<int,int> Cat::move(const vector<bool>& world, pair<int,int> catPos, int sid
 
         frontierSet.insert(current.pos);
 
-        if (world->catWinsOnSpace(current.pos)) // TO DO: make a border exit function
+        bool catWins = catWinsOnSpace(current.pos, sideSize);
+        if (catWins)
         {
             borderExit = current.pos;
             break;
@@ -179,7 +204,7 @@ pair<int,int> Cat::move(const vector<bool>& world, pair<int,int> catPos, int sid
     }
 
     // no path was found
-    if (borderExit == make_pair<int,int>(0,0))
+    if (borderExit == make_pair<int,int>(100,100))
     {
         return catPos;
     }
@@ -189,6 +214,7 @@ pair<int,int> Cat::move(const vector<bool>& world, pair<int,int> catPos, int sid
     pair<int,int> current = borderExit;
     while (current != catPos)
     {
+
         path.push_back(current);
         current = cameFrom[current];
     }
