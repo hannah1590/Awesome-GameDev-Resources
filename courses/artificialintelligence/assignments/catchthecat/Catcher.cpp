@@ -115,12 +115,11 @@ vector<pair<int, char>> Catcher::getDistances(pair<int,int> current, int sideSiz
 bool Catcher::catWinsOnSpace(pair<int,int> pos, int sideSize)
 {
     int size = sideSize / 2;
-
-    if(pos.second >= size + pos.second || pos.second <= size - pos.second)
+    if(pos.second >= size || pos.second <= -size)
     {
         return true;
     }
-    else if(pos.first >= size + pos.first || pos.first <= size - pos.first)
+    else if(pos.first >= size || pos.first <= -size)
     {
         return true;
     }
