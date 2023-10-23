@@ -144,7 +144,7 @@ struct Node
 
 pair<int,int> Catcher::move(const vector<bool>& world, pair<int,int> catPos, int sideSize )
 {
-    pair<int,int> borderExit(0,0);
+    pair<int,int> borderExit(100,100);
 
     priority_queue<Node, vector<Node>, greater<Node>> frontier; // puts nodes in a queue from low cost to high cost
     unordered_set< pair<int,int>, pairHash> frontierSet;
@@ -165,7 +165,8 @@ pair<int,int> Catcher::move(const vector<bool>& world, pair<int,int> catPos, int
 
         frontierSet.insert(current.pos);
 
-        if (catWinsOnSpace(current.pos, sideSize))
+        bool catWins = catWinsOnSpace(current.pos, sideSize);
+        if (catWins)
         {
             borderExit = current.pos;
             break;
@@ -205,7 +206,7 @@ pair<int,int> Catcher::move(const vector<bool>& world, pair<int,int> catPos, int
     }
 
     // no path was found
-    if (borderExit == make_pair<int,int>(0,0))
+    if (borderExit == make_pair<int,int>(100,100))
     {
         return catPos;
     }
@@ -215,6 +216,7 @@ pair<int,int> Catcher::move(const vector<bool>& world, pair<int,int> catPos, int
     pair<int,int> current = borderExit;
     while (current != catPos)
     {
+
         path.push_back(current);
         current = cameFrom[current];
     }

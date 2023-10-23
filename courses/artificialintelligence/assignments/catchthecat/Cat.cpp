@@ -214,7 +214,6 @@ pair<int,int> Cat::move(const vector<bool>& world, pair<int,int> catPos, int sid
     pair<int,int> current = borderExit;
     while (current != catPos)
     {
-
         path.push_back(current);
         current = cameFrom[current];
     }
